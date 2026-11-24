@@ -1447,11 +1447,9 @@
    "pref": "茨城",
    "area": "",
    "name": "水戸納豆",
-   "owned": true,
+   "owned": false,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_ibaraki-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "slug": "mito-natto",
-   "photo": "photos/mito-natto.jpg",
    "reading": "みとなっとう mitonattou"
   },
   {
@@ -1459,10 +1457,12 @@
    "pref": "茨城",
    "area": "",
    "name": "水戸黄門",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_ibaraki-01.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "reading": "みとこうもん mitokoumon"
+   "reading": "みとこうもん mitokoumon",
+   "slug": "mito-komon",
+   "photo": "photos/mito-komon.jpg"
   },
   {
    "id": "e121",
@@ -3631,11 +3631,13 @@
    "pref": "大阪",
    "area": "",
    "name": "お好み焼き",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2025/10/mokeke_Osaka_okonomiyaki-1.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
    "embroidery": "お好み焼き",
-   "reading": "おこのみやき おこのみやき okonomiyaki okonomiyaki"
+   "reading": "おこのみやき おこのみやき okonomiyaki okonomiyaki",
+   "slug": "okonomiyaki",
+   "photo": "photos/okonomiyaki.jpg"
   },
   {
    "id": "e338",
@@ -3668,12 +3670,10 @@
    "pref": "大阪",
    "area": "",
    "name": "串かつ",
-   "owned": true,
+   "owned": false,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/11/mkk_osaka-11.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
    "embroidery": "二度漬け禁止",
-   "slug": "kushikatsu",
-   "photo": "photos/kushikatsu.jpg",
    "reading": "くしかつ にどつけきんし kushikatsu nidotsukekinshi"
   },
   {
@@ -3775,11 +3775,13 @@
    "pref": "大阪",
    "area": "",
    "name": "おばちゃん",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_osaka-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
    "embroidery": "アメちゃん",
-   "reading": "おばちゃん あめちゃん obachan amechan"
+   "reading": "おばちゃん あめちゃん obachan amechan",
+   "slug": "amechan",
+   "photo": "photos/amechan.jpg"
   },
   {
    "id": "e350",
@@ -6767,18 +6769,6 @@
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_suizokukan-13.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/suizokukan/",
    "reading": "いるか すいぞくかん iruka suizokukan"
-  },
-  {
-   "id": "u002",
-   "pref": "大阪",
-   "area": "",
-   "name": "ミックスジュース",
-   "owned": true,
-   "slug": "mix-juice",
-   "photo": "photos/mix-juice.jpg",
-   "note": "アイアップの「モケケ全国MAP」（2026年11月時点）には載っていない子。旧デザインか別ルートの限定品かもしれません。",
-   "unlisted": true,
-   "reading": "みっくすじゅーす mikkusujuusu"
   }
  ],
  "shops": {
