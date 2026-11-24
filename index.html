@@ -44,20 +44,44 @@
       padding: 12px 14px; font-size: 16px; color: var(--ink); outline: none;
     }
     .bar input:focus { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
-    .chips {
-      display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
-    .chips::-webkit-scrollbar { display: none; }
-    .chip {
-      flex: 0 0 auto; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
-      border-radius: 999px; padding: 6px 12px; font-size: .85rem; cursor: pointer; white-space: nowrap;
+    .pickrow { display: flex; gap: 8px; margin-top: 10px; }
+    .pickbtn {
+      flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 12px;
+      padding: 10px 14px; font-size: .95rem; font-weight: 650; cursor: pointer; text-align: left;
       -webkit-tap-highlight-color: transparent;
     }
-    .chip .n { color: var(--faint); font-size: .75rem; margin-left: 4px; }
-    .chip.has { border-color: color-mix(in srgb, var(--own) 40%, var(--line)); }
+    .pickbtn .n { color: var(--muted); font-weight: 500; font-size: .82rem; }
+    .pickbtn .arrow { color: var(--faint); font-size: .8rem; }
+    .quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip {
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+      border-radius: 999px; padding: 5px 11px; font-size: .82rem; cursor: pointer; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .chip .n { color: var(--faint); font-size: .72rem; margin-left: 3px; }
+    .chip.has { border-color: color-mix(in srgb, var(--own) 45%, var(--line)); background: color-mix(in srgb, var(--own) 8%, var(--paper)); }
     .chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
     .chip.on .n { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+    .quick .lbl { font-size: .72rem; color: var(--faint); align-self: center; margin-right: 2px; }
+    /* region picker sheet */
+    .pk-title { font-size: 1.05rem; font-weight: 700; margin: 0 0 10px; }
+    .pk-top { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; clear: both; }
+    .pk-group { margin-top: 14px; }
+    .pk-group h4 { margin: 0 0 6px; font-size: .75rem; font-weight: 600; color: var(--faint); letter-spacing: .06em; }
+    .pk-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .pk {
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 10px;
+      padding: 7px 2px 6px; font-size: .9rem; line-height: 1.2; cursor: pointer; text-align: center;
+      -webkit-tap-highlight-color: transparent; min-height: 48px;
+    }
+    .pk small { display: block; font-size: .68rem; color: var(--faint); margin-top: 2px; }
+    .pk.has { border-color: color-mix(in srgb, var(--own) 55%, var(--line)); background: color-mix(in srgb, var(--own) 12%, var(--paper)); font-weight: 650; }
+    .pk.has small { color: var(--own); font-weight: 650; }
+    .pk.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .pk.on small { color: color-mix(in srgb, var(--paper) 75%, transparent); }
+    .pk-top .pk { min-height: 44px; font-weight: 650; }
+    .pk-legend { margin-top: 12px; font-size: .72rem; color: var(--faint); }
     .seg { display: flex; gap: 6px; margin-top: 8px; }
     .seg button {
       flex: 1; border: 1px solid var(--line); background: var(--paper); border-radius: 10px; padding: 7px 0;
@@ -140,7 +164,8 @@
     </header>
     <div class="bar">
       <input id="q" type="search" enterkeyhint="search" placeholder="名前・お腹の文字・地域（ひらがな・ローマ字OK）" autocomplete="off" autocorrect="off" spellcheck="false">
-      <div class="chips" id="chips"></div>
+      <div class="pickrow"><button type="button" class="pickbtn" id="pickbtn" aria-haspopup="dialog"></button></div>
+      <div class="quick" id="quick"></div>
       <div class="seg" id="seg">
         <button type="button" data-f="all" class="on">ぜんぶ</button>
         <button type="button" data-f="own">持ってる</button>
@@ -153,6 +178,9 @@
   </div>
   <div class="overlay" id="overlay" hidden>
     <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="detail-title" tabindex="-1"></div>
+  </div>
+  <div class="overlay" id="picker" hidden>
+    <div class="sheet" id="pksheet" role="dialog" aria-modal="true" aria-label="地域をえらぶ" tabindex="-1"></div>
   </div>
   <script>
     const $ = (id) => document.getElementById(id);
@@ -174,22 +202,65 @@
     const itemsOf = (p) => DATA.items.filter((i) => i.pref === p);
     const countOf = (list) => ({ own: list.filter((i) => i.owned).length, all: list.length });
 
+    const AREAS = [
+      ["北海道・東北", ["北海道", "青森", "岩手", "宮城", "秋田", "山形", "福島"]],
+      ["関東", ["茨城", "栃木", "群馬", "埼玉", "千葉", "東京", "神奈川"]],
+      ["中部", ["新潟", "富山", "石川", "福井", "山梨", "長野", "岐阜", "静岡", "愛知"]],
+      ["近畿", ["三重", "滋賀", "京都", "大阪", "兵庫", "奈良", "和歌山"]],
+      ["中国", ["鳥取", "島根", "岡山", "広島", "山口"]],
+      ["四国", ["徳島", "香川", "愛媛", "高知"]],
+      ["九州・沖縄", ["福岡", "佐賀", "長崎", "熊本", "大分", "宮崎", "鹿児島", "沖縄"]],
+      ["そのほか", ["広域", "全国"]],
+    ];
+    // north-to-south (JIS 01-47), then 広域・全国
+    const ORDER = AREAS.flatMap(([, ps]) => ps);
+    const ordered = () => ORDER.filter((p) => regionOf(p));
+    const ownedPrefs = () => ordered().filter((p) => itemsOf(p).some((i) => i.owned));
+    const prefLabel = (p) => p === "ALL" ? "ぜんぶの地域" : p === "持ってる地域" ? "持ってる地域だけ" : (regionOf(p)?.full || p);
+    function choose(p) { state.pref = p; localStorage.setItem("mkk-pref", p); closePicker(); render(); window.scrollTo({ top: 0 }); }
     function renderChips() {
-      const chips = $("chips"); chips.replaceChildren();
-      const add = (pref, label, c) => {
-        const b = el("button", "chip" + (state.pref === pref ? " on" : "") + (c && c.own ? " has" : ""));
-        b.type = "button"; b.textContent = label;
+      const btn = $("pickbtn"); btn.replaceChildren();
+      const left = el("span", null, prefLabel(state.pref));
+      if (!["ALL", "持ってる地域"].includes(state.pref)) { const c = countOf(itemsOf(state.pref)); left.append(" ", el("span", "n", `持ってる ${c.own}/${c.all}`)); }
+      btn.append(left, el("span", "arrow", "地域をえらぶ ▾"));
+      const q = $("quick"); q.replaceChildren();
+      q.append(el("span", "lbl", "持ってる地域"));
+      const chip = (p, label, c) => {
+        const b = el("button", "chip" + (state.pref === p ? " on" : "") + (c && c.own ? " has" : "")); b.type = "button"; b.textContent = label;
         if (c) b.append(el("span", "n", `${c.own}/${c.all}`));
-        b.addEventListener("click", () => { state.pref = pref; localStorage.setItem("mkk-pref", pref); render(); });
-        chips.append(b);
+        b.addEventListener("click", () => choose(p)); q.append(b);
       };
-      const tot = countOf(DATA.items);
-      add("持ってる地域", "持ってる地域", null);
-      add("ALL", "ぜんぶ", tot);
-      const regions = [...DATA.regions].sort((a, b) => (countOf(itemsOf(b.pref)).own > 0) - (countOf(itemsOf(a.pref)).own > 0));
-      for (const r of regions) { const c = countOf(itemsOf(r.pref)); if (c.all) add(r.pref, r.pref, c); }
-      const on = chips.querySelector(".on"); if (on) on.scrollIntoView({ inline: "center", block: "nearest" });
+      chip("持ってる地域", "まとめて", null);
+      for (const p of ownedPrefs()) chip(p, p, countOf(itemsOf(p)));
     }
+    function openPicker() {
+      const sh = $("pksheet"); sh.replaceChildren();
+      const close = el("button", "sheet-close", "閉じる"); close.type = "button"; close.addEventListener("click", closePicker);
+      sh.append(el("div", "sheet-handle"), close, el("h3", "pk-title", "地域をえらぶ"));
+      const pk = (p, label, c, cls = "") => {
+        const b = el("button", `pk ${cls}` + (c && c.own ? " has" : "") + (state.pref === p ? " on" : "")); b.type = "button";
+        b.append(label); if (c) b.append(el("small", null, `${c.own}/${c.all}`));
+        b.addEventListener("click", () => choose(p)); return b;
+      };
+      const top = el("div", "pk-top");
+      const tot = countOf(DATA.items);
+      top.append(pk("持ってる地域", "持ってる地域だけ", { own: tot.own, all: ownedPrefs().length }), pk("ALL", "ぜんぶ", tot));
+      top.children[0].querySelector("small").textContent = `${ownedPrefs().length}地域・${tot.own}体`;
+      sh.append(top);
+      for (const [name, ps] of AREAS) {
+        const list = ps.filter((p) => regionOf(p) && itemsOf(p).length); if (!list.length) continue;
+        const g = el("div", "pk-group"); g.append(el("h4", null, name));
+        const grid = el("div", "pk-grid");
+        for (const p of list) grid.append(pk(p, p, countOf(itemsOf(p))));
+        g.append(grid); sh.append(g);
+      }
+      sh.append(el("p", "pk-legend", "緑＝持ってるモケケがいる地域。数字は 持ってる数／全種類。"));
+      const ov = $("picker"); ov.hidden = false; ov.classList.add("open"); document.body.style.overflow = "hidden"; sh.scrollTop = 0; sh.focus();
+    }
+    function closePicker() { const ov = $("picker"); if (!ov.classList.contains("open")) return; ov.classList.remove("open"); ov.hidden = true; document.body.style.overflow = ""; }
+    $("pickbtn").addEventListener("click", openPicker);
+    $("picker").addEventListener("click", (e) => { if (e.target === $("picker")) closePicker(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePicker(); });
     function card(it) {
       const b = el("button", "card " + (it.owned ? "own" : "not")); b.type = "button";
       b.addEventListener("click", () => openDetail(it.id));
@@ -237,8 +308,8 @@
       if (state.filter === "own") pool = pool.filter((i) => i.owned);
       if (state.filter === "not") pool = pool.filter((i) => !i.owned);
       let prefs;
-      if (searching || state.pref === "ALL") prefs = DATA.regions.map((r) => r.pref);
-      else if (state.pref === "持ってる地域") prefs = DATA.regions.map((r) => r.pref).filter((p) => itemsOf(p).some((i) => i.owned));
+      if (searching || state.pref === "ALL") prefs = ordered();
+      else if (state.pref === "持ってる地域") prefs = ownedPrefs();
       else prefs = [state.pref];
       if (state.pref === "持ってる地域" && !searching && state.filter === "all") pool = pool.filter((i) => i.owned);
       const list = $("list"); list.replaceChildren();
