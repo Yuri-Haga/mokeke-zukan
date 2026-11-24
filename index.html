@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f6f1e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="モケケ図鑑">
+  <meta name="description" content="持っているご当地モケケと、まだのモケケ。">
+  <title>モケケ図鑑</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root {
+      --bg: #f6f1e8; --paper: #fffdf8; --ink: #2a241c; --muted: #6f675c; --faint: #9a9286;
+      --line: #e6ddd0; --accent: #c2410c; --own: #15803d; --shadow: 0 8px 24px rgba(42,36,28,.08);
+      --radius: 16px; --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", YuGothic, sans-serif;
+      background: var(--bg); color: var(--ink); line-height: 1.55; min-height: 100dvh; -webkit-text-size-adjust: 100%;
+    }
+    a { color: var(--accent); }
+    button, input { font: inherit; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: calc(16px + var(--safe-top)) 16px calc(32px + var(--safe-bottom)); }
+    header.top { padding: 8px 0 12px; }
+    header.top h1 { margin: 0; font-size: 1.55rem; font-weight: 650; letter-spacing: .12em; }
+    header.top p { margin: 4px 0 0; color: var(--muted); font-size: .85rem; }
+    .bar {
+      position: sticky; top: 0; z-index: 5;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      margin: 0 -16px; padding: 8px 16px 10px;
+    }
+    .bar input {
+      width: 100%; border: 1px solid var(--line); background: var(--paper); border-radius: 12px;
+      padding: 12px 14px; font-size: 16px; color: var(--ink); outline: none;
+    }
+    .bar input:focus { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+    .chips {
+      display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+      border-radius: 999px; padding: 6px 12px; font-size: .85rem; cursor: pointer; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .chip .n { color: var(--faint); font-size: .75rem; margin-left: 4px; }
+    .chip.has { border-color: color-mix(in srgb, var(--own) 40%, var(--line)); }
+    .chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .chip.on .n { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+    .seg { display: flex; gap: 6px; margin-top: 8px; }
+    .seg button {
+      flex: 1; border: 1px solid var(--line); background: var(--paper); border-radius: 10px; padding: 7px 0;
+      font-size: .85rem; color: var(--muted); cursor: pointer;
+    }
+    .seg button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .meta { min-height: 1.3em; margin-top: 6px; font-size: .8rem; color: var(--muted); }
+    section.pref { margin-top: 18px; }
+    section.pref h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; font-size: 1.15rem; }
+    section.pref h2 .count { font-size: .85rem; color: var(--muted); font-weight: 500; }
+    .progress { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 12px; }
+    .progress i { display: block; height: 100%; background: var(--own); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+    .card {
+      appearance: none; border: 0; background: transparent; padding: 0; text-align: left; color: inherit;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: var(--radius); position: relative;
+    }
+    .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .photo {
+      aspect-ratio: 3 / 4; border-radius: var(--radius); overflow: hidden; display: flex; align-items: center;
+      justify-content: center; background: #fff; position: relative;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .card.own .photo { box-shadow: var(--shadow); outline: 2px solid var(--own); outline-offset: -2px; }
+    .card.own .photo.mine img { object-fit: cover; }
+    .card.not .photo { background: transparent; border: 1.5px dashed #cfc5b6; }
+    .card.not .photo img { filter: grayscale(1); opacity: .45; }
+    .ph-name { padding: 8px; text-align: center; color: var(--faint); font-size: .8rem; }
+    .badge {
+      position: absolute; top: 6px; left: 6px; font-size: .68rem; font-weight: 700; padding: 2px 7px;
+      border-radius: 999px; background: var(--own); color: #fff;
+    }
+    .card.not .badge { background: var(--paper); color: var(--accent); border: 1px solid var(--accent); }
+    .badge.q { left: auto; right: 6px; background: #f59e0b; color: #fff; border: 0; }
+    .card-name { margin-top: 6px; font-weight: 650; font-size: .88rem; overflow-wrap: anywhere; line-height: 1.35; }
+    .card.not .card-name { color: var(--muted); font-weight: 500; }
+    .card-meta { margin-top: 2px; font-size: .72rem; color: var(--faint); overflow-wrap: anywhere; }
+    .empty { text-align: center; color: var(--muted); padding: 40px 8px; }
+    .shops { margin-top: 22px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .shops h3 { margin: 0 0 8px; font-size: .95rem; }
+    .shops ul { margin: 0; padding-left: 1.1em; font-size: .85rem; }
+    .shops li { margin: 6px 0; }
+    .shops .s { color: var(--muted); font-size: .78rem; }
+    footer.note { margin-top: 36px; font-size: .75rem; color: var(--faint); text-align: center; }
+    footer.note a { color: var(--faint); }
+    .overlay { position: fixed; inset: 0; background: rgba(30,24,18,.45); z-index: 20; display: none; align-items: flex-end; justify-content: center; }
+    .overlay.open { display: flex; }
+    .sheet {
+      background: var(--paper); width: min(760px, 100%); max-height: min(94dvh, 100%); overflow: auto;
+      border-radius: 20px 20px 0 0; padding: 12px 20px calc(28px + var(--safe-bottom));
+      box-shadow: 0 -8px 40px rgba(0,0,0,.18); -webkit-overflow-scrolling: touch;
+    }
+    .sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: 4px auto 12px; }
+    .sheet-close { float: right; border: 0; background: transparent; color: var(--muted); font-size: .9rem; padding: 6px 0 10px 16px; cursor: pointer; }
+    .detail-imgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 12px; clear: both; }
+    .detail-imgs figure { margin: 0; }
+    .detail-imgs .photo { border: 1px solid var(--line); }
+    .detail-imgs figcaption { font-size: .72rem; color: var(--faint); text-align: center; margin-top: 4px; }
+    .detail-title { font-size: 1.3rem; font-weight: 700; margin: 14px 0 0; }
+    .status { display: inline-block; margin-top: 6px; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--own); color: #fff; }
+    .status.not { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .specs { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .9rem; }
+    .specs th, .specs td { padding: 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    .specs th { width: 6.5em; color: var(--faint); font-weight: 500; }
+    .fine { margin-top: 14px; font-size: .78rem; color: var(--muted); }
+    .links { margin-top: 14px; font-size: .85rem; }
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .overlay { align-items: center; padding: 24px; }
+      .sheet { border-radius: 20px; max-height: 90dvh; padding: 20px 28px 32px; }
+      .sheet-handle { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <h1>モケケ図鑑</h1>
+      <p id="count"></p>
+    </header>
+    <div class="bar">
+      <input id="q" type="search" enterkeyhint="search" placeholder="名前・お腹の文字・地域（ひらがな・ローマ字OK）" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="chips" id="chips"></div>
+      <div class="seg" id="seg">
+        <button type="button" data-f="all" class="on">ぜんぶ</button>
+        <button type="button" data-f="own">持ってる</button>
+        <button type="button" data-f="not">まだ</button>
+      </div>
+      <div class="meta" id="status"></div>
+    </div>
+    <div id="list"></div>
+    <footer class="note" id="foot"></footer>
+  </div>
+  <div class="overlay" id="overlay" hidden>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="detail-title" tabindex="-1"></div>
+  </div>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+    const ROMA = [["kya","きゃ"],["kyu","きゅ"],["kyo","きょ"],["sha","しゃ"],["shu","しゅ"],["sho","しょ"],["chi","ち"],["cha","ちゃ"],["chu","ちゅ"],["cho","ちょ"],["tsu","つ"],["nya","にゃ"],["nyu","にゅ"],["nyo","にょ"],["hya","ひゃ"],["hyu","ひゅ"],["hyo","ひょ"],["mya","みゃ"],["myu","みゅ"],["myo","みょ"],["rya","りゃ"],["ryu","りゅ"],["ryo","りょ"],["gya","ぎゃ"],["gyu","ぎゅ"],["gyo","ぎょ"],["ja","じゃ"],["ju","じゅ"],["jo","じょ"],["ji","じ"],["shi","し"],["fu","ふ"]];
+    function toHiragana(s) { return s.replace(/[\u30A1-\u30F6]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) - 0x60)); }
+    function fold(s) { return toHiragana(String(s).normalize("NFKC")).toLowerCase().replace(/[\s・ー〜~!！?？（）()]/g, ""); }
+    // romaji: drop long vowels so "osaka" matches "oosaka", "natto" matches "nattou"
+    function foldRoma(s) { return fold(s).replace(/ou/g, "o").replace(/oo/g, "o").replace(/uu/g, "u").replace(/aa/g, "a").replace(/ii/g, "i").replace(/ee/g, "e"); }
+    function matches(it, region, q) {
+      const n = fold(q); if (!n) return true;
+      const hay = fold([it.name, it.embroidery, it.look, it.area, it.reading, it.note, region?.full, region?.reading].filter(Boolean).join(" "));
+      if (hay.includes(n)) return true;
+      return /^[a-z0-9]+$/.test(n) && foldRoma(hay).includes(foldRoma(n));
+    }
+    let DATA = null;
+    const state = { pref: localStorage.getItem("mkk-pref") || "大阪", filter: "all" };
+    const regionOf = (p) => DATA.regions.find((r) => r.pref === p);
+    const itemsOf = (p) => DATA.items.filter((i) => i.pref === p);
+    const countOf = (list) => ({ own: list.filter((i) => i.owned).length, all: list.length });
+
+    function renderChips() {
+      const chips = $("chips"); chips.replaceChildren();
+      const add = (pref, label, c) => {
+        const b = el("button", "chip" + (state.pref === pref ? " on" : "") + (c && c.own ? " has" : ""));
+        b.type = "button"; b.textContent = label;
+        if (c) b.append(el("span", "n", `${c.own}/${c.all}`));
+        b.addEventListener("click", () => { state.pref = pref; localStorage.setItem("mkk-pref", pref); render(); });
+        chips.append(b);
+      };
+      const tot = countOf(DATA.items);
+      add("持ってる地域", "持ってる地域", null);
+      add("ALL", "ぜんぶ", tot);
+      const regions = [...DATA.regions].sort((a, b) => (countOf(itemsOf(b.pref)).own > 0) - (countOf(itemsOf(a.pref)).own > 0));
+      for (const r of regions) { const c = countOf(itemsOf(r.pref)); if (c.all) add(r.pref, r.pref, c); }
+      const on = chips.querySelector(".on"); if (on) on.scrollIntoView({ inline: "center", block: "nearest" });
+    }
+    function card(it) {
+      const b = el("button", "card " + (it.owned ? "own" : "not")); b.type = "button";
+      b.addEventListener("click", () => openDetail(it.id));
+      const ph = el("div", "photo" + (it.owned && it.photo ? " mine" : ""));
+      const src = it.owned && it.photo ? it.photo : it.ref;
+      if (src) {
+        const img = el("img"); img.loading = "lazy"; img.alt = it.name; img.referrerPolicy = "no-referrer"; img.src = src;
+        img.onerror = () => { if (it.ref && img.src !== it.ref && !img.dataset.f) { img.dataset.f = 1; ph.classList.remove("mine"); img.src = it.ref; } else { img.remove(); ph.append(el("div", "ph-name", it.name)); } };
+        ph.append(img);
+      } else ph.append(el("div", "ph-name", it.name));
+      ph.append(el("span", "badge", it.owned ? "持ってる" : "まだ"));
+      if (it.note && /要確認|確認中/.test(it.note)) ph.append(el("span", "badge q", "?"));
+      b.append(ph, el("div", "card-name", it.name));
+      const meta = [it.embroidery ? `お腹「${it.embroidery.replace(/（.*）/, "")}」` : "", it.area].filter(Boolean).join("・");
+      if (meta) b.append(el("div", "card-meta", meta));
+      return b;
+    }
+    function section(pref, list, showShops) {
+      const r = regionOf(pref); const c = countOf(itemsOf(pref));
+      const s = el("section", "pref");
+      const h = el("h2", null, r ? r.full : pref); h.append(el("span", "count", `持ってる ${c.own} / ${c.all}`));
+      const pg = el("div", "progress"); const bar = el("i"); bar.style.width = `${c.all ? (100 * c.own) / c.all : 0}%`; pg.append(bar);
+      const g = el("div", "grid");
+      const sorted = [...list].sort((a, b) => (b.owned - a.owned) || (a.area || "").localeCompare(b.area || "", "ja"));
+      for (const it of sorted) g.append(card(it));
+      s.append(h, pg, g);
+      if (showShops && DATA.shops && DATA.shops[pref]) {
+        const box = el("div", "shops"); box.append(el("h3", null, "買えそうなお店（目撃情報）"));
+        const ul = el("ul");
+        for (const sp of DATA.shops[pref]) { const li = el("li", null, sp.name); li.append(el("br"), el("span", "s", `${sp.seen}（確認日 ${sp.checked}）`)); ul.append(li); }
+        box.append(ul);
+        const p = el("p", "fine"); p.append("出典: ");
+        const a = el("a", null, "モケケ全国販売店マップ"); a.href = DATA.shops._shopsSource; a.target = "_blank"; a.rel = "noopener"; p.append(a, "。在庫は日々変わります。"); box.append(p);
+        s.append(box);
+      }
+      return s;
+    }
+    function render() {
+      renderChips();
+      document.querySelectorAll("#seg button").forEach((b) => b.classList.toggle("on", b.dataset.f === state.filter));
+      const q = $("q").value; const searching = fold(q).length > 0;
+      const tot = countOf(DATA.items);
+      $("count").textContent = `持ってる ${tot.own}体　／　ご当地モケケ ${tot.all}種を収録`;
+      let pool = DATA.items.filter((i) => matches(i, regionOf(i.pref), q));
+      if (state.filter === "own") pool = pool.filter((i) => i.owned);
+      if (state.filter === "not") pool = pool.filter((i) => !i.owned);
+      let prefs;
+      if (searching || state.pref === "ALL") prefs = DATA.regions.map((r) => r.pref);
+      else if (state.pref === "持ってる地域") prefs = DATA.regions.map((r) => r.pref).filter((p) => itemsOf(p).some((i) => i.owned));
+      else prefs = [state.pref];
+      if (state.pref === "持ってる地域" && !searching && state.filter === "all") pool = pool.filter((i) => i.owned);
+      const list = $("list"); list.replaceChildren();
+      let shown = 0;
+      for (const p of prefs) {
+        const sub = pool.filter((i) => i.pref === p); if (!sub.length) continue;
+        shown += sub.length; list.append(section(p, sub, prefs.length === 1));
+      }
+      $("status").textContent = searching ? (shown ? `${shown}件` : "見つかりませんでした。ひらがな・ローマ字でも探せます。") : (state.pref === "持ってる地域" && state.filter === "all" ? "持っているモケケの地域だけ表示中" : "");
+      if (!shown && !searching) list.append(el("div", "empty", "この条件のモケケはいません。"));
+    }
+    function row(label, value) { const tr = el("tr"); const th = el("th", null, label); th.scope = "row"; tr.append(th, el("td", null, value)); return tr; }
+    function fig(src, cap, mine) {
+      const f = el("figure"); const ph = el("div", "photo"); const img = el("img"); img.src = src; img.alt = cap; img.referrerPolicy = "no-referrer";
+      img.onerror = () => f.remove(); if (mine) img.style.objectFit = "cover";
+      ph.append(img); f.append(ph, el("figcaption", null, cap)); return f;
+    }
+    function openDetail(id, push = true) {
+      const it = DATA.items.find((x) => x.id === id); if (!it) return;
+      const sheet = $("sheet"); sheet.replaceChildren();
+      const close = el("button", "sheet-close", "閉じる"); close.type = "button"; close.addEventListener("click", () => closeDetail());
+      const imgs = el("div", "detail-imgs");
+      if (it.owned && it.photo) imgs.append(fig(it.photo, "わたしのモケケ", true));
+      if (it.ref) imgs.append(fig(it.ref, "公式の商品画像（アイアップ）"));
+      const r = regionOf(it.pref);
+      const t = el("h2", "detail-title", it.name); t.id = "detail-title";
+      const st = el("span", "status" + (it.owned ? "" : " not"), it.owned ? "持ってる" : "まだ持ってない");
+      const tb = el("tbody");
+      tb.append(row("地域", [r ? r.full : it.pref, it.area].filter(Boolean).join("・")));
+      if (it.embroidery) tb.append(row("お腹の文字", it.embroidery));
+      if (it.look) tb.append(row("見た目", it.look));
+      const table = el("table", "specs"); table.append(tb);
+      sheet.append(el("div", "sheet-handle"), close, imgs, t, st, table);
+      if (it.note) sheet.append(el("p", "fine", it.note));
+      if (it.source) { const p = el("p", "links"); const a = el("a", null, "出典：アイアップ「モケケ 全国MAP」"); a.href = it.source; a.target = "_blank"; a.rel = "noopener noreferrer"; p.append(a); sheet.append(p); }
+      const ov = $("overlay"); ov.hidden = false; ov.classList.add("open"); document.body.style.overflow = "hidden"; sheet.focus();
+      if (push && location.hash !== `#${it.id}`) history.pushState({ id: it.id }, "", `#${it.id}`);
+    }
+    function closeDetail(push = true) {
+      const ov = $("overlay"); ov.classList.remove("open"); ov.hidden = true; document.body.style.overflow = "";
+      if (push && location.hash) history.pushState({}, "", location.pathname + location.search);
+    }
+    $("overlay").addEventListener("click", (e) => { if (e.target === $("overlay")) closeDetail(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("open")) closeDetail(); });
+    $("q").addEventListener("input", render);
+    $("seg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; state.filter = b.dataset.f; render(); });
+    function applyHash() {
+      const id = decodeURIComponent(location.hash.replace(/^#/, ""));
+      if (id && DATA.items.some((i) => i.id === id)) openDetail(id, false);
+      else if ($("overlay").classList.contains("open")) closeDetail(false);
+    }
+    window.addEventListener("popstate", applyHash); window.addEventListener("hashchange", applyHash);
+    fetch("data.json", { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => {
+      DATA = d;
+      if (!["ALL", "持ってる地域"].includes(state.pref) && !regionOf(state.pref)) state.pref = "大阪";
+      const foot = $("foot"); foot.append(`ラインナップは ${d.updated} 時点の公開情報。まだの子の画像は公式の商品画像（権利は各権利者）。 `);
+      d.sources.forEach((s, i) => { const a = el("a", null, s.label); a.href = s.href; a.target = "_blank"; a.rel = "noopener"; foot.append(i ? " ／ " : "", a); });
+      render(); applyHash();
+    }).catch((err) => { $("status").textContent = "データを読み込めませんでした。"; console.error(err); });
+  </script>
+</body>
+</html>
