@@ -3674,7 +3674,6 @@
    "embroidery": "二度漬け禁止",
    "slug": "kushikatsu",
    "photo": "photos/kushikatsu.jpg",
-   "note": "お腹の刺しゅうから推定（要確認）",
    "reading": "くしかつ にどつけきんし kushikatsu nidotsukekinshi"
   },
   {
@@ -3739,11 +3738,13 @@
    "pref": "大阪",
    "area": "",
    "name": "通天閣",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/07/mkk_osaka-06.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
    "embroidery": "つうてんかく",
-   "reading": "つうてんかく つうてんかく tsuutenkaku tsuutenkaku"
+   "reading": "つうてんかく つうてんかく tsuutenkaku tsuutenkaku",
+   "slug": "osaka-pink",
+   "photo": "photos/osaka-pink.jpg"
   },
   {
    "id": "e347",
@@ -3767,7 +3768,6 @@
    "embroidery": "おおきに（緑）",
    "slug": "occhan",
    "photo": "photos/occhan.jpg",
-   "note": "お腹の刺しゅうから推定（要確認）",
    "reading": "おっちゃん おおきに otchan ookini"
   },
   {
@@ -6767,18 +6767,6 @@
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_suizokukan-13.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/suizokukan/",
    "reading": "いるか すいぞくかん iruka suizokukan"
-  },
-  {
-   "id": "u001",
-   "pref": "大阪",
-   "area": "",
-   "name": "ピンクのモケケ（刺しゅう確認中）",
-   "owned": true,
-   "slug": "osaka-pink",
-   "photo": "photos/osaka-pink.jpg",
-   "note": "写真の刺しゅうを確認中。公式一覧のピンク系は「通天閣（つうてんかく）」と「おばちゃん ピンク（ええねん）」。",
-   "unlisted": true,
-   "reading": "ぴんくのもけけ（ししゅうかくにんなか） pinkunomokeke(shishuukakuninnaka)"
   },
   {
    "id": "u002",
