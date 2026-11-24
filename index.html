@@ -81,6 +81,13 @@
     .pk.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
     .pk.on small { color: color-mix(in srgb, var(--paper) 75%, transparent); }
     .pk-top .pk { min-height: 44px; font-weight: 650; }
+    .pk-areas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .pk.area { font-size: .8rem; font-weight: 650; padding: 7px 1px 6px; letter-spacing: -.02em; }
+    .pk-head {
+      display: flex; width: 100%; justify-content: space-between; align-items: baseline; border: 0; background: transparent;
+      padding: 4px 0 6px; margin: 0; font-size: .78rem; font-weight: 650; color: var(--muted); cursor: pointer; letter-spacing: .06em;
+    }
+    .pk-head span { font-size: .72rem; font-weight: 500; color: var(--accent); letter-spacing: 0; }
     .pk-legend { margin-top: 12px; font-size: .72rem; color: var(--faint); }
     .seg { display: flex; gap: 6px; margin-top: 8px; }
     .seg button {
@@ -216,12 +223,16 @@
     const ORDER = AREAS.flatMap(([, ps]) => ps);
     const ordered = () => ORDER.filter((p) => regionOf(p));
     const ownedPrefs = () => ordered().filter((p) => itemsOf(p).some((i) => i.owned));
-    const prefLabel = (p) => p === "ALL" ? "ぜんぶの地域" : p === "持ってる地域" ? "持ってる地域だけ" : (regionOf(p)?.full || p);
+    const isArea = (p) => typeof p === "string" && p.startsWith("area:");
+    const areaPrefs = (p) => ((AREAS.find(([n]) => "area:" + n === p) || [, []])[1]).filter((x) => regionOf(x) && itemsOf(x).length);
+    const areaCount = (p) => countOf(areaPrefs(p).flatMap(itemsOf));
+    const isMulti = (p) => p === "ALL" || p === "持ってる地域" || isArea(p);
+    const prefLabel = (p) => p === "ALL" ? "ぜんぶの地域" : p === "持ってる地域" ? "持ってる地域だけ" : isArea(p) ? p.slice(5) + "地方" : (regionOf(p)?.full || p);
     function choose(p) { state.pref = p; localStorage.setItem("mkk-pref", p); closePicker(); render(); window.scrollTo({ top: 0 }); }
     function renderChips() {
       const btn = $("pickbtn"); btn.replaceChildren();
       const left = el("span", null, prefLabel(state.pref));
-      if (!["ALL", "持ってる地域"].includes(state.pref)) { const c = countOf(itemsOf(state.pref)); left.append(" ", el("span", "n", `持ってる ${c.own}/${c.all}`)); }
+      if (state.pref !== "持ってる地域") { const c = state.pref === "ALL" ? countOf(DATA.items) : isArea(state.pref) ? areaCount(state.pref) : countOf(itemsOf(state.pref)); left.append(" ", el("span", "n", `持ってる ${c.own}/${c.all}`)); }
       btn.append(left, el("span", "arrow", "地域をえらぶ ▾"));
       const q = $("quick"); q.replaceChildren();
       q.append(el("span", "lbl", "持ってる地域"));
@@ -247,9 +258,15 @@
       top.append(pk("持ってる地域", "持ってる地域だけ", { own: tot.own, all: ownedPrefs().length }), pk("ALL", "ぜんぶ", tot));
       top.children[0].querySelector("small").textContent = `${ownedPrefs().length}地域・${tot.own}体`;
       sh.append(top);
+      const ag = el("div", "pk-group"); ag.append(el("h4", null, "地方ごとにまとめて見る"));
+      const agrid = el("div", "pk-grid pk-areas");
+      for (const [name] of AREAS) { const key = "area:" + name; if (!areaPrefs(key).length) continue; agrid.append(pk(key, name, areaCount(key), "area")); }
+      ag.append(agrid); sh.append(ag);
       for (const [name, ps] of AREAS) {
         const list = ps.filter((p) => regionOf(p) && itemsOf(p).length); if (!list.length) continue;
-        const g = el("div", "pk-group"); g.append(el("h4", null, name));
+        const g = el("div", "pk-group");
+        const hb = el("button", "pk-head"); hb.type = "button"; hb.append(name, el("span", null, "まとめて見る ›"));
+        hb.addEventListener("click", () => choose("area:" + name)); g.append(hb);
         const grid = el("div", "pk-grid");
         for (const p of list) grid.append(pk(p, p, countOf(itemsOf(p))));
         g.append(grid); sh.append(g);
@@ -308,17 +325,18 @@
       if (state.filter === "own") pool = pool.filter((i) => i.owned);
       if (state.filter === "not") pool = pool.filter((i) => !i.owned);
       let prefs;
-      if (searching || state.pref === "ALL") prefs = ordered();
+      if (isArea(state.pref)) prefs = areaPrefs(state.pref);
       else if (state.pref === "持ってる地域") prefs = ownedPrefs();
+      else if (searching || state.pref === "ALL") prefs = ordered();
       else prefs = [state.pref];
       if (state.pref === "持ってる地域" && !searching && state.filter === "all") pool = pool.filter((i) => i.owned);
       const list = $("list"); list.replaceChildren();
       let shown = 0;
       for (const p of prefs) {
         const sub = pool.filter((i) => i.pref === p); if (!sub.length) continue;
-        shown += sub.length; list.append(section(p, sub, prefs.length === 1));
+        shown += sub.length; list.append(section(p, sub, !isMulti(state.pref) || prefs.length === 1));
       }
-      $("status").textContent = searching ? (shown ? `${shown}件` : "見つかりませんでした。ひらがな・ローマ字でも探せます。") : (state.pref === "持ってる地域" && state.filter === "all" ? "持っているモケケの地域だけ表示中" : "");
+      $("status").textContent = searching ? (shown ? `${shown}件` : "見つかりませんでした。ひらがな・ローマ字でも探せます。") : (state.pref === "持ってる地域" && state.filter === "all" ? "持っているモケケの地域だけ表示中" : isArea(state.pref) ? `${prefLabel(state.pref)}（${areaPrefs(state.pref).join("・")}）を北から表示中` : "");
       if (!shown && !searching) list.append(el("div", "empty", "この条件のモケケはいません。"));
     }
     function row(label, value) { const tr = el("tr"); const th = el("th", null, label); th.scope = "row"; tr.append(th, el("td", null, value)); return tr; }
@@ -364,7 +382,7 @@
     window.addEventListener("popstate", applyHash); window.addEventListener("hashchange", applyHash);
     fetch("data.json", { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => {
       DATA = d;
-      if (!["ALL", "持ってる地域"].includes(state.pref) && !regionOf(state.pref)) state.pref = "大阪";
+      if (!["ALL", "持ってる地域"].includes(state.pref) && !regionOf(state.pref) && !(isArea(state.pref) && areaPrefs(state.pref).length)) state.pref = "大阪";
       const foot = $("foot"); foot.append(`ラインナップは ${d.updated} 時点の公開情報。まだの子の画像は公式の商品画像（権利は各権利者）。 `);
       d.sources.forEach((s, i) => { const a = el("a", null, s.label); a.href = s.href; a.target = "_blank"; a.rel = "noopener"; foot.append(i ? " ／ " : "", a); });
       render(); applyHash();
