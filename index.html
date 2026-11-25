@@ -96,6 +96,7 @@
     }
     .seg button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
     .meta { min-height: 1.3em; margin-top: 6px; font-size: .8rem; color: var(--muted); }
+    .meta:empty { display: none; min-height: 0; margin: 0; }
     section.pref { margin-top: 18px; }
     section.pref h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; font-size: 1.15rem; }
     section.pref h2 .count { font-size: .85rem; color: var(--muted); font-weight: 500; }
@@ -155,6 +156,28 @@
     .specs th { width: 6.5em; color: var(--faint); font-weight: 500; }
     .fine { margin-top: 14px; font-size: .78rem; color: var(--muted); }
     .links { margin-top: 14px; font-size: .85rem; }
+    /* list-only (compact) mode */
+    html.list-only header.top { display: none; }
+    html.list-only .wrap { padding-top: 0; }
+    html.list-only .bar { padding-top: calc(8px + var(--safe-top)); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    html.list-only .menu { display: none; }
+    html.list-only section.pref:first-child { margin-top: 12px; }
+    html:not(.list-only) .compact { display: none; }
+    .compact { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
+    .compact-sum {
+      flex: 1; min-width: 0; margin: 0; font-size: .9rem; font-weight: 650;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .compact-sum .n { color: var(--muted); font-weight: 500; }
+    .compact-open, .listmode-btn {
+      flex-shrink: 0; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+      border-radius: 999px; padding: 8px 14px; font-size: .82rem; font-weight: 650; cursor: pointer;
+      min-height: 44px; white-space: nowrap; -webkit-tap-highlight-color: transparent;
+    }
+    .listmode-btn {
+      display: flex; align-items: center; justify-content: center; width: 100%;
+      margin-top: 10px; border-radius: 12px; font-size: .9rem;
+    }
     @media (min-width: 640px) {
       .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .overlay { align-items: center; padding: 24px; }
@@ -162,6 +185,7 @@
       .sheet-handle { display: none; }
     }
   </style>
+  <script>try { if (localStorage.getItem("mkk-list") === "1") document.documentElement.classList.add("list-only"); } catch (e) {}</script>
 </head>
 <body>
   <div class="wrap">
@@ -169,16 +193,23 @@
       <h1>モケケ図鑑</h1>
       <p id="count"></p>
     </header>
-    <div class="bar">
-      <input id="q" type="search" enterkeyhint="search" placeholder="名前・お腹の文字・地域（ひらがな・ローマ字OK）" autocomplete="off" autocorrect="off" spellcheck="false">
-      <div class="pickrow"><button type="button" class="pickbtn" id="pickbtn" aria-haspopup="dialog"></button></div>
-      <div class="quick" id="quick"></div>
-      <div class="seg" id="seg">
-        <button type="button" data-f="all" class="on">ぜんぶ</button>
-        <button type="button" data-f="own">持ってる</button>
-        <button type="button" data-f="not">まだ</button>
+    <div class="bar" id="bar">
+      <div class="compact" id="compact">
+        <p class="compact-sum" id="compact-label"></p>
+        <button type="button" class="compact-open" id="openmenu" aria-expanded="false" aria-controls="menu">メニューを開く</button>
       </div>
-      <div class="meta" id="status"></div>
+      <div class="menu" id="menu">
+        <input id="q" type="search" enterkeyhint="search" placeholder="名前・お腹の文字・地域（ひらがな・ローマ字OK）" autocomplete="off" autocorrect="off" spellcheck="false">
+        <div class="pickrow"><button type="button" class="pickbtn" id="pickbtn" aria-haspopup="dialog"></button></div>
+        <div class="quick" id="quick"></div>
+        <div class="seg" id="seg">
+          <button type="button" data-f="all" class="on">ぜんぶ</button>
+          <button type="button" data-f="own">持ってる</button>
+          <button type="button" data-f="not">まだ</button>
+        </div>
+        <div class="meta" id="status"></div>
+        <button type="button" class="listmode-btn" id="listmode" aria-expanded="true" aria-controls="menu">一覧だけ見る</button>
+      </div>
     </div>
     <div id="list"></div>
     <footer class="note" id="foot"></footer>
@@ -204,7 +235,27 @@
       return /^[a-z0-9]+$/.test(n) && foldRoma(hay).includes(foldRoma(n));
     }
     let DATA = null;
-    const state = { pref: localStorage.getItem("mkk-pref") || "大阪", filter: "all" };
+    const state = { pref: localStorage.getItem("mkk-pref") || "大阪", filter: "all", listOnly: localStorage.getItem("mkk-list") === "1" };
+    const FILTER_LABEL = { all: "ぜんぶ", own: "持ってる", not: "まだ" };
+    function applyListMode() {
+      document.documentElement.classList.toggle("list-only", state.listOnly);
+      try { localStorage.setItem("mkk-list", state.listOnly ? "1" : "0"); } catch (e) {}
+      $("openmenu").setAttribute("aria-expanded", String(!state.listOnly));
+      $("listmode").setAttribute("aria-expanded", String(!state.listOnly));
+    }
+    function setListOnly(on) {
+      state.listOnly = on;
+      applyListMode();
+      if (on) window.scrollTo({ top: 0 });
+    }
+    function renderCompact() {
+      const lab = $("compact-label"); lab.replaceChildren();
+      const region = state.pref === "ALL" ? "ぜんぶ" : state.pref === "持ってる地域" ? "持ってる地域" : isArea(state.pref) ? state.pref.slice(5) : state.pref;
+      const c = state.pref === "ALL" ? countOf(DATA.items) : state.pref === "持ってる地域" ? countOf(ownedPrefs().flatMap(itemsOf)) : isArea(state.pref) ? areaCount(state.pref) : countOf(itemsOf(state.pref));
+      const q = $("q").value.trim();
+      lab.append(`${region} · ${FILTER_LABEL[state.filter] || "ぜんぶ"} · `);
+      lab.append(el("span", "n", q ? `「${q}」` : `${c.own}/${c.all}`));
+    }
     const regionOf = (p) => DATA.regions.find((r) => r.pref === p);
     const itemsOf = (p) => DATA.items.filter((i) => i.pref === p);
     const countOf = (list) => ({ own: list.filter((i) => i.owned).length, all: list.length });
@@ -317,6 +368,7 @@
     }
     function render() {
       renderChips();
+      renderCompact();
       document.querySelectorAll("#seg button").forEach((b) => b.classList.toggle("on", b.dataset.f === state.filter));
       const q = $("q").value; const searching = fold(q).length > 0;
       const tot = countOf(DATA.items);
@@ -374,6 +426,9 @@
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("open")) closeDetail(); });
     $("q").addEventListener("input", render);
     $("seg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; state.filter = b.dataset.f; render(); });
+    $("listmode").addEventListener("click", () => setListOnly(true));
+    $("openmenu").addEventListener("click", () => setListOnly(false));
+    applyListMode();
     function applyHash() {
       const id = decodeURIComponent(location.hash.replace(/^#/, ""));
       if (id && DATA.items.some((i) => i.id === id)) openDetail(id, false);
