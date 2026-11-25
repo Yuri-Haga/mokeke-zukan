@@ -4454,19 +4454,6 @@
    "reading": "もも momo"
   },
   {
-   "id": "e648",
-   "pref": "広域",
-   "area": "瀬戸内",
-   "name": "しまなみ",
-   "owned": true,
-   "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chugoku/",
-   "reading": "しまなみ せとうち shimanami setouchi",
-   "embroidery": "瀬戸内しまなみ",
-   "slug": "shimanami",
-   "photo": "photos/shimanami.jpg",
-   "note": "タグのラインナップは「瀬戸内しまなみ」「瀬戸大橋」「レモン」。お腹の刺繍も「瀬戸内しまなみ」。公式MAP（中国）には2026年11月25日時点で瀬戸大橋・レモン総柄・レモンの3件のみで、しまなみの公式商品写真は未掲載。"
-  },
-  {
    "id": "e410",
    "pref": "広域",
    "area": "瀬戸内",
@@ -4494,10 +4481,13 @@
    "pref": "広域",
    "area": "瀬戸内",
    "name": "レモン",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_setouchi-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chugoku/",
-   "reading": "れもん せとうち remon setouchi"
+   "reading": "れもん せとうち remon setouchi",
+   "embroidery": "瀬戸内レモン",
+   "slug": "setouchi-lemon-yellow",
+   "photo": "photos/setouchi-lemon-yellow.jpg"
   },
   {
    "id": "e413",
