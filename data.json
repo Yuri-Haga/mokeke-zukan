@@ -1252,10 +1252,13 @@
    "pref": "山形",
    "area": "",
    "name": "さくらんぼ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_yamagata-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/touhoku/",
-   "reading": "さくらんぼ sakuranbo"
+   "reading": "さくらんぼ sakuranbo",
+   "embroidery": "さくらんぼ",
+   "slug": "sakuranbo",
+   "photo": "photos/sakuranbo.jpg"
   },
   {
    "id": "e099",
@@ -2270,10 +2273,13 @@
    "pref": "新潟",
    "area": "",
    "name": "たらい舟",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/10/mkk_nigata-06.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "たらいふね taraifune"
+   "reading": "たらいふね taraifune",
+   "embroidery": "たらい舟",
+   "slug": "taraifune",
+   "photo": "photos/taraifune.jpg"
   },
   {
    "id": "e198",
@@ -2312,10 +2318,13 @@
    "pref": "新潟",
    "area": "",
    "name": "柿の種",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_nigata-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "かきのたね kakinotane"
+   "reading": "かきのたね kakinotane",
+   "embroidery": "柿の種",
+   "slug": "kakinotane",
+   "photo": "photos/kakinotane.jpg"
   },
   {
    "id": "e202",
@@ -2332,20 +2341,26 @@
    "pref": "新潟",
    "area": "",
    "name": "笹団子",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_nigata-05.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "ささだんご sasadango"
+   "reading": "ささだんご sasadango",
+   "slug": "sasadango",
+   "photo": "photos/sasadango.jpg"
   },
   {
    "id": "e204",
    "pref": "富山",
    "area": "",
    "name": "薬売り",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/10/mkk_toyama-05.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "くすりうりり kusuriuriri"
+   "reading": "くすりうりり kusuriuriri",
+   "embroidery": "富山のお薬",
+   "slug": "kusuriuri",
+   "photo": "photos/kusuriuri.jpg",
+   "note": "公式名は「薬売り」。お腹の刺繍は「富山のお薬」。"
   },
   {
    "id": "e205",
@@ -2362,20 +2377,26 @@
    "pref": "富山",
    "area": "",
    "name": "富山ブラック",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_toyama-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "とやまぶらっく toyamaburakku"
+   "reading": "とやまぶらっく toyamaburakku",
+   "embroidery": "富山ブラック",
+   "slug": "toyama-black",
+   "photo": "photos/toyama-black.jpg"
   },
   {
    "id": "e207",
    "pref": "富山",
    "area": "",
    "name": "白エビ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_toyama-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "しろえび shiroebi"
+   "reading": "しろえび shiroebi",
+   "embroidery": "白エビ",
+   "slug": "shiroebi",
+   "photo": "photos/shiroebi.jpg"
   },
   {
    "id": "e208",
@@ -2518,10 +2539,13 @@
    "pref": "山梨",
    "area": "",
    "name": "ぶどう",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_yamanashi-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "ぶどう budou"
+   "reading": "ぶどう budou",
+   "embroidery": "ぶどう",
+   "slug": "budou",
+   "photo": "photos/budou.jpg"
   },
   {
    "id": "e222",
@@ -2548,20 +2572,28 @@
    "pref": "長野",
    "area": "信州",
    "name": "かっぱ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/08/mkk_shinshu-17.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "かっぱ しんしゅう kappa shinshuu"
+   "reading": "かっぱ しんしゅう kappa shinshuu",
+   "embroidery": "上高地",
+   "slug": "shinshu-kappa",
+   "photo": "photos/shinshu-kappa.jpg",
+   "note": "公式名は「かっぱ」。お腹の刺繍は「上高地」。"
   },
   {
    "id": "e225",
    "pref": "長野",
    "area": "信州",
    "name": "そば",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/08/mkk_shinshu-16.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "そば しんしゅう soba shinshuu"
+   "reading": "そば しんしゅう soba shinshuu",
+   "embroidery": "信州そば",
+   "slug": "shinshu-soba",
+   "photo": "photos/shinshu-soba.jpg",
+   "note": "公式名は「そば」。お腹の刺繍は「信州そば」。"
   },
   {
    "id": "e226",
@@ -2588,20 +2620,25 @@
    "pref": "長野",
    "area": "信州",
    "name": "アルクマ 総柄",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/05/mkk_shinshu_12.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "あるくま そうがら しんしゅう arukuma sougara shinshuu"
+   "reading": "あるくま そうがら しんしゅう arukuma sougara shinshuu",
+   "slug": "arukuma-sougara",
+   "photo": "photos/arukuma-sougara.jpg"
   },
   {
    "id": "e229",
    "pref": "長野",
    "area": "信州",
    "name": "松本城",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/10/mkk_shinshu_13.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "まつもとしろ しんしゅう matsumotoshiro shinshuu"
+   "reading": "まつもとしろ しんしゅう matsumotoshiro shinshuu",
+   "embroidery": "松本城",
+   "slug": "matsumotojo",
+   "photo": "photos/matsumotojo.jpg"
   },
   {
    "id": "e230",
@@ -2618,10 +2655,14 @@
    "pref": "長野",
    "area": "信州",
    "name": "りんご",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/12/mkk_shinshu-10.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "りんご しんしゅう ringo shinshuu"
+   "reading": "りんご しんしゅう ringo shinshuu",
+   "embroidery": "りんご",
+   "slug": "shinshu-ringo",
+   "photo": "photos/shinshu-ringo.jpg",
+   "note": "公式の商品写真は別デザイン（黄色い舌、刺繍「信州りんご」、紫ドットの腕）。現物と現行の信州タグ「りんご」は葉付き・歯の顔・刺繍「りんご」・赤黄ボーダーの腕。Lサイズ（e232、ボールチェーン）ではない。"
   },
   {
    "id": "e232",
@@ -2708,10 +2749,14 @@
    "pref": "長野",
    "area": "諏訪湖",
    "name": "花火",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_karuizawasuwako-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "はなび すわみずうみ hanabi suwamizuumi"
+   "reading": "はなび すわみずうみ hanabi suwamizuumi",
+   "embroidery": "すわこ 花火",
+   "slug": "suwako-hanabi",
+   "photo": "photos/suwako-hanabi.jpg",
+   "note": "公式名は「花火」。柄の文字は「すわこ」「花火」。"
   },
   {
    "id": "e241",
@@ -3044,10 +3089,13 @@
    "pref": "静岡",
    "area": "",
    "name": "うなぎ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_shizuoka-07.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "うなぎ unagi"
+   "reading": "うなぎ unagi",
+   "embroidery": "うなぎ",
+   "slug": "unagi",
+   "photo": "photos/unagi.jpg"
   },
   {
    "id": "e274",
@@ -3260,10 +3308,13 @@
    "pref": "広域",
    "area": "アルプス",
    "name": "アルプス",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/08/mkk_alps-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "あるぷす あるぷす arupusu arupusu"
+   "reading": "あるぷす あるぷす arupusu arupusu",
+   "embroidery": "アルプス",
+   "slug": "alps",
+   "photo": "photos/alps.jpg"
   },
   {
    "id": "e295",
@@ -4557,10 +4608,12 @@
    "pref": "広島",
    "area": "",
    "name": "もみじ饅頭 総柄",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_hiroshima-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chugoku/",
-   "reading": "もみじまんじゅう そうがら momijimanjuu sougara"
+   "reading": "もみじまんじゅう そうがら momijimanjuu sougara",
+   "slug": "momiji-manju-sougara",
+   "photo": "photos/momiji-manju-sougara.jpg"
   },
   {
    "id": "e420",
@@ -5448,10 +5501,13 @@
    "pref": "熊本",
    "area": "",
    "name": "熊本城",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/05/mkk_kumamoto-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kyusyu/",
-   "reading": "くまもとじょう kumamotojou"
+   "reading": "くまもとじょう kumamotojou",
+   "embroidery": "熊本城",
+   "slug": "kumamotojo",
+   "photo": "photos/kumamotojo.jpg"
   },
   {
    "id": "e506",
