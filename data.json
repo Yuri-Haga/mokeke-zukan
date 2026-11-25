@@ -730,10 +730,13 @@
    "pref": "北海道",
    "area": "",
    "name": "まりも",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_hokkaido-24.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/hokkaido/",
-   "reading": "まりも marimo"
+   "reading": "まりも marimo",
+   "embroidery": "まりも",
+   "slug": "marimo",
+   "photo": "photos/marimo.jpg"
   },
   {
    "id": "e048",
@@ -923,10 +926,13 @@
    "pref": "岩手",
    "area": "",
    "name": "南部鉄器",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/01/mkk_iwate-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/touhoku/",
-   "reading": "なんぶてっき nanbutekki"
+   "reading": "なんぶてっき nanbutekki",
+   "embroidery": "南部鉄器",
+   "slug": "nambu-tekki",
+   "photo": "photos/nambu-tekki.jpg"
   },
   {
    "id": "e067",
@@ -1450,20 +1456,26 @@
    "pref": "茨城",
    "area": "",
    "name": "あんこう",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/04/mkk_ibaraki-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "reading": "あんこう ankou"
+   "reading": "あんこう ankou",
+   "embroidery": "あんこう",
+   "slug": "ankou",
+   "photo": "photos/ankou.jpg"
   },
   {
    "id": "e119",
    "pref": "茨城",
    "area": "",
    "name": "水戸納豆",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_ibaraki-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "reading": "みとなっとう mitonattou"
+   "reading": "みとなっとう mitonattou",
+   "embroidery": "水戸納豆",
+   "slug": "mito-natto",
+   "photo": "photos/mito-natto.jpg"
   },
   {
    "id": "e120",
@@ -1899,10 +1911,13 @@
    "pref": "東京",
    "area": "",
    "name": "雷門",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_tokyo-06.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "reading": "かみなりもん kaminarimon"
+   "reading": "かみなりもん kaminarimon",
+   "embroidery": "雷門",
+   "slug": "kaminarimon",
+   "photo": "photos/kaminarimon.jpg"
   },
   {
    "id": "e163",
@@ -2052,10 +2067,13 @@
    "pref": "神奈川",
    "area": "横浜DeNAベイスターズ",
    "name": "横浜DeNAベイスターズ　ホワイト",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2025/02/mkk_yokohama-10.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kantou/",
-   "reading": "よこはまDeNAべいすたーず　ほわいと よこはまDeNAべいすたーず yokohamadenabeisutaazu howaito yokohamadenabeisutaazu"
+   "reading": "よこはまDeNAべいすたーず　ほわいと よこはまDeNAべいすたーず yokohamadenabeisutaazu howaito yokohamadenabeisutaazu",
+   "look": "白い体に青い角、お腹にベイスターズのBロゴ",
+   "slug": "baystars-white",
+   "photo": "photos/baystars-white.jpg"
   },
   {
    "id": "e178",
@@ -2364,10 +2382,13 @@
    "pref": "富山",
    "area": "",
    "name": "ホタルイカ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_toyama-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "ほたるいか hotaruika"
+   "reading": "ほたるいか hotaruika",
+   "embroidery": "ホタルイカ",
+   "slug": "hotaruika",
+   "photo": "photos/hotaruika.jpg"
   },
   {
    "id": "e209",
@@ -3043,10 +3064,13 @@
    "pref": "静岡",
    "area": "",
    "name": "わさび",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_shizuoka-05.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chubu/",
-   "reading": "わさび wasabi"
+   "reading": "わさび wasabi",
+   "embroidery": "わさび",
+   "slug": "wasabi",
+   "photo": "photos/wasabi.jpg"
   },
   {
    "id": "e276",
@@ -3925,10 +3949,13 @@
    "pref": "兵庫",
    "area": "神戸",
    "name": "神戸牛",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_kobe-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
-   "reading": "こうべうし こうべ koubeushi koube"
+   "reading": "こうべうし こうべ koubeushi koube",
+   "embroidery": "神戸牛",
+   "slug": "kobeushi",
+   "photo": "photos/kobeushi.jpg"
   },
   {
    "id": "e361",
@@ -3975,20 +4002,26 @@
    "pref": "兵庫",
    "area": "姫路",
    "name": "殿様",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_himeji-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
-   "reading": "とのさま ひめじ tonosama himeji"
+   "reading": "とのさま ひめじ tonosama himeji",
+   "embroidery": "姫路",
+   "slug": "tonosama",
+   "photo": "photos/tonosama.jpg"
   },
   {
    "id": "e366",
    "pref": "兵庫",
    "area": "姫路",
    "name": "姫路城",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_himeji-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kinki/",
-   "reading": "ひめじじょう ひめじ himejijou himeji"
+   "reading": "ひめじじょう ひめじ himejijou himeji",
+   "embroidery": "姫路城",
+   "slug": "himejijo",
+   "photo": "photos/himejijo.jpg"
   },
   {
    "id": "e367",
@@ -4421,6 +4454,19 @@
    "reading": "もも momo"
   },
   {
+   "id": "e648",
+   "pref": "広域",
+   "area": "瀬戸内",
+   "name": "しまなみ",
+   "owned": true,
+   "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chugoku/",
+   "reading": "しまなみ せとうち shimanami setouchi",
+   "embroidery": "瀬戸内しまなみ",
+   "slug": "shimanami",
+   "photo": "photos/shimanami.jpg",
+   "note": "タグのラインナップは「瀬戸内しまなみ」「瀬戸大橋」「レモン」。お腹の刺繍も「瀬戸内しまなみ」。公式MAP（中国）には2026年11月25日時点で瀬戸大橋・レモン総柄・レモンの3件のみで、しまなみの公式商品写真は未掲載。"
+  },
+  {
    "id": "e410",
    "pref": "広域",
    "area": "瀬戸内",
@@ -4631,10 +4677,13 @@
    "pref": "山口",
    "area": "",
    "name": "夏みかん",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_yamaguchi-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/chugoku/",
-   "reading": "なつみかん natsumikan"
+   "reading": "なつみかん natsumikan",
+   "embroidery": "山口夏みかん",
+   "slug": "natsumikan",
+   "photo": "photos/natsumikan.jpg"
   },
   {
    "id": "e431",
@@ -4844,10 +4893,13 @@
    "pref": "高知",
    "area": "",
    "name": "坂本龍馬（リニューアルデザイン）",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2022/10/mkk_kochi-04.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/shikoku/",
-   "reading": "さかもとりょうま（りにゅーあるでざいん） sakamotoryouma(rinyuuarudezain)"
+   "reading": "さかもとりょうま（りにゅーあるでざいん） sakamotoryouma(rinyuuarudezain)",
+   "embroidery": "龍馬",
+   "slug": "ryoma-renewal",
+   "photo": "photos/ryoma-renewal.jpg"
   },
   {
    "id": "e452",
@@ -4884,10 +4936,13 @@
    "pref": "高知",
    "area": "",
    "name": "土佐カツオ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_kochi-02.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/shikoku/",
-   "reading": "とさかつお tosakatsuo"
+   "reading": "とさかつお tosakatsuo",
+   "embroidery": "土佐カツオ",
+   "slug": "tosa-katsuo",
+   "photo": "photos/tosa-katsuo.jpg"
   },
   {
    "id": "e456",
@@ -5113,10 +5168,13 @@
    "pref": "福岡",
    "area": "",
    "name": "太宰府 総柄",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_fukuoka-03.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kyusyu/",
-   "reading": "だざいふ そうがら dazaifu sougara"
+   "reading": "だざいふ そうがら dazaifu sougara",
+   "look": "紅地に梅の花と「太宰府」の文字の総柄、水色ボーダーの腕",
+   "slug": "dazaifu-sougara",
+   "photo": "photos/dazaifu-sougara.jpg"
   },
   {
    "id": "e478",
@@ -5800,12 +5858,16 @@
   {
    "id": "e545",
    "pref": "鹿児島",
-   "area": "",
+   "area": "奄美",
    "name": "黒うさぎ",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/12/mkk_amami-01.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kyusyu/",
-   "reading": "くろうさぎ kurousagi"
+   "reading": "くろうさぎ あまみ kurousagi amami",
+   "embroidery": "奄美黒うさぎ",
+   "slug": "kurousagi",
+   "photo": "photos/kurousagi.jpg",
+   "note": "公式名は「黒うさぎ」。お腹の刺繍とタグの表記は「奄美黒うさぎ」。公式MAPでは鹿児島の項、タグと公式商品写真の印は「奄美限定」。屋久島・種子島に合わせて地域を「奄美」とした。"
   },
   {
    "id": "e546",
@@ -5820,12 +5882,12 @@
   {
    "id": "e547",
    "pref": "鹿児島",
-   "area": "",
+   "area": "奄美",
    "name": "大島紬",
    "owned": false,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2023/12/mkk_amami-02-1.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kyusyu/",
-   "reading": "おおしまつむぎ ooshimatsumugi"
+   "reading": "おおしまつむぎ あまみ ooshimatsumugi amami"
   },
   {
    "id": "e548",
@@ -5925,10 +5987,13 @@
    "pref": "鹿児島",
    "area": "",
    "name": "桜島 ピンク",
-   "owned": false,
+   "owned": true,
    "ref": "https://www.eyeup.co.jp/gotouchi/wp-content/uploads/2021/06/mkk_kagoshima-11.jpg",
    "source": "https://www.eyeup.co.jp/gotouchi/mkkmap/kyusyu/",
-   "reading": "さくらしま ぴんく sakurashima pinku"
+   "reading": "さくらしま ぴんく sakurashima pinku",
+   "embroidery": "桜島",
+   "slug": "sakurajima-pink",
+   "photo": "photos/sakurajima-pink.jpg"
   },
   {
    "id": "e558",
